@@ -25,7 +25,7 @@ def train_model(model, inputs, output_norm, control_dict):
     return history
 
 
-def compute_plot_error(input_1, input_2, output, dataset, model, y_ref):
+def compute_plot_error(input_1, input_2, output, dataset, model, y_ref, control_dict):
     x_plot = np.zeros(input_1.shape)
     z_plot = np.zeros(output.shape)
 
@@ -43,16 +43,31 @@ def compute_plot_error(input_1, input_2, output, dataset, model, y_ref):
     Z_plot = denormalize_mean(Z, output.mean())
 
     # Display the dataset
-    fig, ax = plt.subplots()
-    ax.scatter(x_plot, z_plot, s=2)
-    ax.scatter(X_plot, Z_plot, color='red', s=2)
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.scatter(x_plot, z_plot, label="Data", s=2)
+    ax.scatter(X_plot, Z_plot, label="Model Output", color='red', s=2)
+    ax.set_xlabel("Temperature (K)")
+    ax.set_ylabel(control_dict["output"])
+    ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
     ax.grid()
+    fig.tight_layout()
     plt.savefig('solution-check.png', dpi=300)
 
     # Display the error
-    fig1, ax1 = plt.subplots()
-    ax1.scatter(X_plot, (Z_plot - z_plot) / (z_plot + 1-6) * 100.0, s=2)
-    ax1.set_ylim(-50, 50)
+    fig1, ax1 = plt.subplots(figsize=(5, 5))
+    ax1.scatter(X_plot, (Z_plot - z_plot) / (z_plot + 1 - 6) * 100.0, s=2)
+    ax1.set_ylim(-40, 40)
+    ax1.set_xlabel("Temperature (K)")
+    ax1.set_ylabel("Relative Error (%)")
     ax1.grid()
-    plt.savefig('relative-error.png', dpi=300)
+    plt.savefig('relative-error.png', dpi=300, bbox_inches="tight")
 
+
+def save_model(model):
+    # serialize model to JSON
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+        json_file.write(model_json)
+    # serialize weights to HDF5
+    model.save_weights("model.h5")
+    print("Saved model to disk")

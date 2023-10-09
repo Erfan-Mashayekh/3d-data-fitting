@@ -5,5 +5,5 @@
   "scale_input_1": "1.0",
   "scale_input_2": "1.0",
   "scale_output": "1000.0",
-  "epochs": "5000"
+  "epochs": "20000"
 }
