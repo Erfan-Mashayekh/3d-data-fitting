@@ -10,5 +10,5 @@ def plot_loss(history):
     ax.set_ylabel('loss')
     ax.set_xlabel('epoch')
     fig.tight_layout()
-    plt.savefig('loss.png', dpi=300)
+    plt.savefig('./output/loss.png', dpi=300)
 
