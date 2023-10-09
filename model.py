@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
-
+import os
 from tensorflow import keras
+from keras.models import model_from_json
 from plotter import plot_loss
 from utilities import *
 
@@ -19,8 +20,8 @@ def generate_model():
     return model
 
 
-def train_model(model, inputs, output_norm, control_dict):
-    history = model.fit(inputs, output_norm, epochs=int(control_dict["epochs"]), verbose=0)
+def train_model(model, inputs_norm, output_norm, control_dict):
+    history = model.fit(inputs_norm, output_norm, epochs=int(control_dict["epochs"]), verbose=0)
     plot_loss(history)
     return history
 
@@ -30,7 +31,7 @@ def compute_plot_error(input_1, input_2, output, dataset, model, y_ref, control_
     z_plot = np.zeros(output.shape)
 
     for i in range(input_1.size):
-        if dataset['p'][i] == y_ref:
+        if dataset[control_dict['input_2']][i] == y_ref:
             x_plot[i] = input_1[i]
             z_plot[i] = output[i]
 
@@ -54,8 +55,8 @@ def compute_plot_error(input_1, input_2, output, dataset, model, y_ref, control_
     plt.savefig('solution-check.png', dpi=300)
 
     # Display the error
-    fig1, ax1 = plt.subplots(figsize=(5, 5))
-    ax1.scatter(X_plot, (Z_plot - z_plot) / (z_plot + 1 - 6) * 100.0, s=2)
+    fig1, ax1 = plt.subplots(figsize=(6, 5))
+    ax1.scatter(X_plot, (Z_plot - z_plot) / (z_plot + 1e-6) * 100.0, s=2)
     ax1.set_ylim(-40, 40)
     ax1.set_xlabel("Temperature (K)")
     ax1.set_ylabel("Relative Error (%)")
@@ -71,3 +72,35 @@ def save_model(model):
     # serialize weights to HDF5
     model.save_weights("model.h5")
     print("Saved model to disk")
+
+
+def load_model():
+    print('A pretrained model is available.')
+    # load json and create model
+    json_file = open('model.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    model = model_from_json(loaded_model_json)
+
+    assert os.path.isfile('./model.h5'), "There are no available trained weights. Make sure the file model.h5 exists!"
+    # load weights into new model
+    model.load_weights("model.h5")
+    model.compile(loss='mse', optimizer='adam', metrics=['mse'])
+    print("Loaded model from disk")
+    return model
+
+
+def write_parameters(model):
+    file = open("parameters.dat", "w")
+    for layer_i in range(len(model.layers)):
+        if layer_i > 0:
+            weights = model.layers[layer_i].get_weights()[0].flatten().T
+            biases = model.layers[layer_i].get_weights()[1]
+
+            file.write(f'\n w{layer_i}: \n\n')
+            for w in weights:
+                file.write(f'{w} \n')
+            file.write(f'\n b{layer_i}: \n\n')
+            for b in biases:
+                file.write(f'{b} \n')
+    file.close()

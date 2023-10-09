@@ -1,6 +1,8 @@
 {
+  "train_mod": "0",
   "input_1": "t",
   "input_2": "p",
+  "plot_at_input_2": "0.2",
   "output": "cp",
   "scale_input_1": "1.0",
   "scale_input_2": "1.0",
