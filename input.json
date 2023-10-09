@@ -1,5 +1,5 @@
 {
-  "train_mod": "0",
+  "train_mod": "1",
   "input_1": "t",
   "input_2": "p",
   "plot_at_input_2": "0.2",
@@ -7,5 +7,5 @@
   "scale_input_1": "1.0",
   "scale_input_2": "1.0",
   "scale_output": "1000.0",
-  "epochs": "20000"
+  "epochs": "10000"
 }

@@ -15,7 +15,9 @@ else:
     model = generate_model()
 
 if int(control_dict["train_mod"]):
+    print("Start training ...")
     train_model(model, inputs_norm, output_norm, control_dict)
+    print("Finish training.")
     save_model(model)
 
 y_ref = float(control_dict["plot_at_input_2"])

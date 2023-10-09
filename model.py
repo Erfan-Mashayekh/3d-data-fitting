@@ -63,6 +63,8 @@ def compute_plot_error(input_1, input_2, output, dataset, model, y_ref, control_
     ax1.grid()
     plt.savefig('relative-error.png', dpi=300, bbox_inches="tight")
 
+    print("Checkout ./relative-error.png and ./solution-check.png files")
+
 
 def save_model(model):
     # serialize model to JSON
@@ -75,7 +77,7 @@ def save_model(model):
 
 
 def load_model():
-    print('A pretrained model is available.')
+    print('Pretrained model is available ...')
     # load json and create model
     json_file = open('model.json', 'r')
     loaded_model_json = json_file.read()
@@ -91,6 +93,7 @@ def load_model():
 
 
 def write_parameters(model):
+    print("Write parameters to ./parameters.dat.")
     file = open("parameters.dat", "w")
     for layer_i in range(len(model.layers)):
         if layer_i > 0:
