@@ -8,6 +8,11 @@ input_1, input_2, output = generate_data(dataset, control_dict)
 inputs_norm, output_norm = manage_data(input_1, input_2, output)
 test_data(inputs_norm, output_norm)
 
+if os.path.isdir("./output"):
+    pass
+else:
+    os.mkdir('output')
+
 if os.path.isfile('./output/model.json'):
     model = load_model(control_dict)
 else:

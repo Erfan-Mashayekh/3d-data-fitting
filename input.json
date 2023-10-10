@@ -1,15 +1,16 @@
 {
-  "train_mod": "0",
+  "train_mod": "1",
   "input_1": "Temperature",
   "input_2": "Pressure",
   "plot_at_input_2": "0.2",
-  "output": "Thermal Conductivity",
+  "output": "Viscosity",
   "scale_input_1": "1.0",
   "scale_input_2": "1.0",
-  "scale_output": "0.1",
-  "epochs": "10000",
+  "scale_output": "0.0001",
+  "epochs": "5000",
   "loss": "mse",
   "optimizer": "adam",
   "metrics":"mse",
   "activation":"elu"
 }
+
