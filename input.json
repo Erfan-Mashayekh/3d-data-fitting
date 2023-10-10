@@ -1,5 +1,5 @@
 {
-  "train_mod": "1",
+  "train_mod": "0",
   "input_1": "Temperature",
   "input_2": "Pressure",
   "plot_at_input_2": "0.2",
