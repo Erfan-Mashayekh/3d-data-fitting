@@ -14,7 +14,7 @@ Make sure that the following packages and libraries are installed:
 - `h5py`: to save/load the trained model
 - any `JSON` file reader library
 
-Download 3d-data-fitting python code from the github link or use command: git clone git@github.com:Erfan-Mashayekh/3d-data-fitting.git
+Download 3d-data-fitting python code from the github link or use command: `git clone git@github.com:Erfan-Mashayekh/3d-data-fitting.git`
 Run the code with the command `python3 make.py`
 
 ## Code Overview
