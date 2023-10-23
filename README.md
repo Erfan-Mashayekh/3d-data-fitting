@@ -1,5 +1,7 @@
 # 3d-data-fitting
 
+![3D data fitting involves the transformation of a discrete dataset into a continuous 3D surface.](cover.png)
+
 ## Introduction
 
 3D-data-fitting is a data management tool designed for working with datasets, especially tailored for machine learning models. It operates within a three-dimensional space, where the variables x and y represent inputs, and the variable z corresponds to the associated output values. The primary objective of this tool is to create a continuous 3D surface that accurately represents the relationships within the 3D dataset by employing deep learning techniques. This process involves training a model to understand the complex interactions between the input parameters x and y, ultimately leading to the creation of a predictive surface that can be invaluable for making data-driven decisions and predictions.
